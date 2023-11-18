@@ -14,6 +14,12 @@ app.get('/', (req, res) => {
 		message: 'This is app a cron job, pdf generator and qr code generator app',
 	});
 });
+app.get('/healthz', (req, res) => {
+	res.status(200).json({
+		success: true,
+		message: 'Ok',
+	});
+});
 
 app.all('*', (req, res, next) => {
 	next(new ErrorHandler(`Can't find ${req.originalUrl} on this server!`, 404));
