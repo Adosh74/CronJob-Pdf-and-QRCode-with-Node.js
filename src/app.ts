@@ -1,8 +1,11 @@
 import express from 'express';
 import { ErrorMiddleware } from './middleware/error.middleware';
+import routes from './routes/index.route';
 import ErrorHandler from './utils/ErrorHandler';
 
 export const app = express();
+
+app.use(express.static('public'));
 
 // middleware
 app.use(express.json());
@@ -20,6 +23,9 @@ app.get('/healthz', (req, res) => {
 		message: 'Ok',
 	});
 });
+
+// routes
+app.use('/api', routes);
 
 app.all('*', (req, res, next) => {
 	next(new ErrorHandler(`Can't find ${req.originalUrl} on this server!`, 404));
