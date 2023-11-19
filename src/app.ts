@@ -1,4 +1,6 @@
 import express from 'express';
+import morgan from 'morgan';
+import envConfig from './config/env.config';
 import { ErrorMiddleware } from './middleware/error.middleware';
 import routes from './routes/index.route';
 import ErrorHandler from './utils/ErrorHandler';
@@ -10,6 +12,7 @@ app.use(express.static('public'));
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+if (envConfig.env === 'development') app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
 	res.status(200).json({
